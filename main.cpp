@@ -48,13 +48,13 @@ void Point::display() {
 
 class Math {
 public:
-    double squareroot();
-    double round(double var);
+    static double squareroot(double number);
+    static double round(double var);
 };
 
-double Math::squareroot() {
+double Math::squareroot(double number) {
     double eps = 1e-6;
-    double k;
+    double k = number;
     double l = 0.0, r, mid;
 
     if (k>=1) {
@@ -121,7 +121,7 @@ double LineSegment::length() {
     double x2 = P2.getXValue();
     double y1 = P1.getYValue();
     double y2 = P2.getYValue();
-    length =
+    length = Math::squareroot(7); //FIX
 }
 //
 //class Intervals {
@@ -173,9 +173,14 @@ int main() {
     int test = 25;
     int *test2 = &test;
     int test3 = *test2;
-    cout << test2 << ": " << test3 << endl;
+    double number = 1e-6;
+    cout << test2 << ": " << number << endl;
     Point* test4 = new Point(10.0, 10.0);
     test4->display();
+    double square = Math::squareroot(6745);
+    cout << "Testing the squareroot function:" << endl;
+    cout << square;
+
 
 
     return 0;
