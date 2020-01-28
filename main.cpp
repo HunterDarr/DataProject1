@@ -1,12 +1,9 @@
 #include <iostream>
 using namespace std; //might be the fix for cout.
 
-int main() {
-
-    return 0;
-}
 
 class Point {
+
 protected:
     double x; //x coordinate value
     double y; //y coordinate value
@@ -49,6 +46,12 @@ void Point::display() {
 }
 
 
+class Math {
+public:
+    double squareroot();
+    double round();
+};
+
 
 class LineSegment {
 protected:
@@ -72,48 +75,78 @@ public:
     //other methods that are necessary
 };
 
-class Intervals {
-protected:
-    LineSegment* segments;
-    int count;
-    int maxSize;
-public:
-    Intervals (); //segments = NULL; count = 0; maxSize = 0;
-    Intervals (int size); //non-default constructor
-    void addLineSegment (LineSegment L);
-    void display();
-/* display all line segment stored in
- the y=mx+c format; see display for LineSegment and print points, length,
- midpoint, x-intercept, y-intercept, for example:
-Line Segment: 1
-P1 = (3.0, 9.0); P2 = (8.0, 16.0)
-slope = 1.4
-equation = y = 1.4*x + 4.8
-length = 8.60
-mid point = (10.5, 12.5)
-x-intercept = ...
-y-intercept = ...
-Line Segment: 2
-P1 = (...); P2 = (...)
-slope = ...
-equation = y = ...
-length = ...
-mid point = ...
-x-intercept = ...
-y-intercept = ...
-...
-*/
-};
-//some extra help below: in case you need it
-Intervals::Intervals () {
-    segments = NULL;
-    count = 0;
-    maxSize = 0;
-}
-Intervals:: Intervals (int size) {
-    segments = new LineSegment [size];
-    count = 0; //currently there is none
-    maxSize = size;
+LineSegment::LineSegment() {
+    //Shouldn't be used.
 }
 
+LineSegment::LineSegment(Point one, Point two) {
+    P1 = one;
+    P2 = two;
+}
+
+double LineSegment::length() {
+    double length;
+    double x1 = P1.getXValue();
+    double x2 = P2.getXValue();
+    double y1 = P1.getYValue();
+    double y2 = P2.getYValue();
+    length =
+}
+//
+//class Intervals {
+//protected:
+//    LineSegment* segments;
+//    int count;
+//    int maxSize;
+//public:
+//    Intervals (); //segments = NULL; count = 0; maxSize = 0;
+//    Intervals (int size); //non-default constructor
+//    void addLineSegment (LineSegment L);
+//    void display();
+///* display all line segment stored in
+// the y=mx+c format; see display for LineSegment and print points, length,
+// midpoint, x-intercept, y-intercept, for example:
+//Line Segment: 1
+//P1 = (3.0, 9.0); P2 = (8.0, 16.0)
+//slope = 1.4
+//equation = y = 1.4*x + 4.8
+//length = 8.60
+//mid point = (10.5, 12.5)
+//x-intercept = ...
+//y-intercept = ...
+//Line Segment: 2
+//P1 = (...); P2 = (...)
+//slope = ...
+//equation = y = ...
+//length = ...
+//mid point = ...
+//x-intercept = ...
+//y-intercept = ...
+//...
+//*/
+//};
+////some extra help below: in case you need it
+//Intervals::Intervals () {
+//    segments = NULL;
+//    count = 0;
+//    maxSize = 0;
+//}
+//Intervals:: Intervals (int size) {
+//    segments = new LineSegment [size];
+//    count = 0; //currently there is none
+//    maxSize = size;
+//}
+
+int main() {
+
+    int test = 25;
+    int *test2 = &test;
+    int test3 = *test2;
+    cout << test2 << ": " << test3 << endl;
+    Point* test4 = new Point(10.0, 10.0);
+    test4->display();
+
+
+    return 0;
+}
 
