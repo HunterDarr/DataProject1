@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std; //might be the fix for cout.
+using namespace std;
 
 
 class Point {
@@ -42,15 +42,46 @@ double Point::getYValue() {
 }
 
 void Point::display() {
-    cout<< "(" << x << ", " << y << ")" << endl;  //FIX THIS. IT HAS PROBLEMS. Might be broken still?
+    cout<< "(" << x << ", " << y << ")" << endl;
 }
 
 
 class Math {
 public:
     double squareroot();
-    double round();
+    double round(double var);
 };
+
+double Math::squareroot() {
+    double eps = 1e-6;
+    double k;
+    double l = 0.0, r, mid;
+
+    if (k>=1) {
+        r = k;
+    }
+    if (k<1)  {
+        r = 1;
+    }
+
+    while (l-k/l > eps || l-k/l < -eps)
+    {
+        mid = l + (r - l) /2 ;
+        if (mid<k/mid)
+        {
+            l = mid;
+        }
+        else {
+            r = mid;
+        }
+    }
+    return l;
+}
+
+double Math::round(double var) {
+    double value = (int)(var * 100.0);
+    return (double)value / 100.0;
+}
 
 
 class LineSegment {
