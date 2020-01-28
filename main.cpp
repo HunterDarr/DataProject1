@@ -92,18 +92,18 @@ public:
     LineSegment (); //default constructor
     LineSegment (Point one, Point two);
     double length(); //return the length of the line segment
-    Point midpoint (); //return the midpoint of the line segment
-    Point xIntercept (); //return the x-intercept of the line segment
-    Point yIntercept (); //return the y-intercept of the line segment
-    double slope (); //return the slope of the line segment
-    bool itIntersects (LineSegment L); //returns true if L intersects
-    //with this line segment
-    Point intersectionPoint (LineSegment L);
-    bool isParallel (LineSegment L); //check if slopes are same
-    void displayEquation (); // you will print in the format
-    // y = m * x + c where m is the slope
-    // and c is the y-intercept
-    //other methods that are necessary
+//    Point midpoint (); //return the midpoint of the line segment
+//    Point xIntercept (); //return the x-intercept of the line segment
+//    Point yIntercept (); //return the y-intercept of the line segment
+//    double slope (); //return the slope of the line segment
+//    bool itIntersects (LineSegment L); //returns true if L intersects
+//    //with this line segment
+//    Point intersectionPoint (LineSegment L);
+//    bool isParallel (LineSegment L); //check if slopes are same
+//    void displayEquation (); // you will print in the format
+//    // y = m * x + c where m is the slope
+//    // and c is the y-intercept
+//    //other methods that are necessary
 };
 
 LineSegment::LineSegment() {
@@ -121,7 +121,8 @@ double LineSegment::length() {
     double x2 = P2.getXValue();
     double y1 = P1.getYValue();
     double y2 = P2.getYValue();
-    length = Math::squareroot(7); //FIX
+    length = Math::squareroot(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))); //FIX
+    return length;
 }
 //
 //class Intervals {
@@ -175,8 +176,13 @@ int main() {
     int test3 = *test2;
     double number = 1e-6;
     cout << test2 << ": " << number << endl;
-    Point* test4 = new Point(10.0, 10.0);
-    test4->display();
+    Point a (4.0,5.0);
+    Point b (6.0,10.0);
+    LineSegment lines (a, b);
+    double answer = lines.length();
+    cout << "Testing the length function:" << endl;
+    cout << answer << endl;
+
     double square = Math::squareroot(6745);
     cout << "Testing the squareroot function:" << endl;
     cout << square;
