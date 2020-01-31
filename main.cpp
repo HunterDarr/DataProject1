@@ -10,7 +10,7 @@ protected:
 public:
     Point (); //default constructor; x = 0.0 and y = 0.0
     Point (double xvalue, double yvalue); //no-default constructor
-    int setLocation (double xvalue, double yvalue); // set x = xvalue and
+    void setLocation (double xvalue, double yvalue); // set x = xvalue and
     // y = yvalue
     double getXValue(); //return x
     double getYValue(); //return y
@@ -28,7 +28,7 @@ Point::Point(double xvalue, double yvalue) {
     y = yvalue;
 }
 
-int Point::setLocation(double xvalue, double yvalue) {
+void Point::setLocation(double xvalue, double yvalue) { //Originally returned int. I changed it to return nothing(void)
     x = xvalue;
     y = yvalue;
 }
@@ -102,7 +102,7 @@ public:
     double slope (); //return the slope of the line segment
 //    bool itIntersects (LineSegment L); //returns true if L intersects
 //    //with this line segment
-//    Point intersectionPoint (LineSegment L);
+    Point intersectionPoint (LineSegment L);
     bool isParallel (LineSegment L); //check if slopes are same
     void displayEquation (); // you will print in the format
 //    // y = m * x + c where m is the slope
@@ -198,6 +198,10 @@ bool LineSegment::isParallel(LineSegment L) {
     else   {
         return false;
     }
+}
+
+Point LineSegment::intersectionPoint(LineSegment L) {
+
 }
 
 //
