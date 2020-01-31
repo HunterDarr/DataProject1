@@ -103,7 +103,7 @@ public:
 //    bool itIntersects (LineSegment L); //returns true if L intersects
 //    //with this line segment
 //    Point intersectionPoint (LineSegment L);
-//    bool isParallel (LineSegment L); //check if slopes are same
+    bool isParallel (LineSegment L); //check if slopes are same
     void displayEquation (); // you will print in the format
 //    // y = m * x + c where m is the slope
 //    // and c is the y-intercept
@@ -188,6 +188,18 @@ double LineSegment::slope() {
 void LineSegment::displayEquation() {
     cout << "y=" << slope() << "*x+" << yIntercept() << endl;
 }
+
+bool LineSegment::isParallel(LineSegment L) {
+    double slopeOne = slope();
+    double slopeTwo = L.slope();
+    if ( slopeOne == slopeTwo )   {
+        return true;
+    }
+    else   {
+        return false;
+    }
+}
+
 //
 //class Intervals {
 //protected:
@@ -240,6 +252,9 @@ int main() {
     int test3 = *test2;
     double number = 1e-6;
     cout << test2 << ": " << number << endl;
+    Point pointOne (0, 6.52);
+    Point pointTwo(6.52, 0);
+    LineSegment line (pointOne, pointTwo);
     Point a (0,5.23);
     Point b (5.23,0);
     LineSegment lines (a, b);
@@ -265,6 +280,16 @@ int main() {
 
     cout << "Testing Display Equation:" << endl;
     lines.displayEquation();
+
+    cout << "Testing parallel boolean:" << endl;
+    if (lines.isParallel(line))   {
+        cout << "The lines are parallel" << endl;
+        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+    }
+    else   {
+        cout << "The lines are not parallel" << endl;
+        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+    }
 
     return 0;
 }
