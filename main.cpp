@@ -94,7 +94,7 @@ public:
     double length(); //return the length of the line segment
     Point midpoint (); //return the midpoint of the line segment
     double xIntercept (); //return the x-intercept of the line segment
-    Point yIntercept (); //return the y-intercept of the line segment
+    double yIntercept (); //return the y-intercept of the line segment
     double slope (); //return the slope of the line segment
 //    bool itIntersects (LineSegment L); //returns true if L intersects
 //    //with this line segment
@@ -148,7 +148,7 @@ double LineSegment::xIntercept() {  //Finish
         xIntercept = y1 - (slope()*(x1));
     }
     else if ( y2 + y1 <= y2)   {
-        xIntercept = y1 - (slope()*(x1));
+        xIntercept = x1 - (slope()*(y1));
     }
     else   {
         //No x intercept
@@ -158,8 +158,14 @@ double LineSegment::xIntercept() {  //Finish
 
 }
 
-Point LineSegment::yIntercept() {  //Finish
-    double test = slope();
+double LineSegment::yIntercept() {  //Finish
+    double x1 = P1.getXValue();
+    double x2 = P2.getXValue();
+    double y1 = P1.getYValue();
+    double y2 = P2.getYValue();
+    double yIntercept;
+    yIntercept = y1 - slope()*x1;
+    return Math::round(yIntercept);
 }
 
 double LineSegment::slope() {
@@ -242,7 +248,8 @@ int main() {
     cout << "Testing the xIntercept" << endl;
     cout << lines.xIntercept() << endl;
 
-
+    cout << "Testing the yIntercept" << endl;
+    cout << lines.yIntercept() << endl;
 
     return 0;
 }
