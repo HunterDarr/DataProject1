@@ -88,6 +88,10 @@ class LineSegment {
 protected:
     Point P1;
     Point P2;
+    double x1;
+    double x2;
+    double y1;
+    double y2;
 public:
     LineSegment (); //default constructor
     LineSegment (Point one, Point two);
@@ -100,7 +104,7 @@ public:
 //    //with this line segment
 //    Point intersectionPoint (LineSegment L);
 //    bool isParallel (LineSegment L); //check if slopes are same
-//    void displayEquation (); // you will print in the format
+    void displayEquation (); // you will print in the format
 //    // y = m * x + c where m is the slope
 //    // and c is the y-intercept
 //    //other methods that are necessary
@@ -113,23 +117,27 @@ LineSegment::LineSegment() {
 LineSegment::LineSegment(Point one, Point two) {
     P1 = one;
     P2 = two;
+    x1 = P1.getXValue();
+    x2 = P2.getXValue();
+    y1 = P1.getYValue();
+    y2 = P2.getYValue();
 }
 
 double LineSegment::length() {
     double length;
-    double x1 = P1.getXValue();
-    double x2 = P2.getXValue();
-    double y1 = P1.getYValue();
-    double y2 = P2.getYValue();
+//    double x1 = P1.getXValue();
+//    double x2 = P2.getXValue();
+//    double y1 = P1.getYValue();
+//    double y2 = P2.getYValue();
     length = Math::squareroot(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))); //FIX
     return Math::round(length);
 }
 
 Point LineSegment::midpoint() {
-    double x1 = P1.getXValue();
-    double x2 = P2.getXValue();
-    double y1 = P1.getYValue();
-    double y2 = P2.getYValue();
+//    double x1 = P1.getXValue();
+//    double x2 = P2.getXValue();
+//    double y1 = P1.getYValue();
+//    double y2 = P2.getYValue();
     double xValue = Math::round((x1 + x2)/2);
     double yValue = Math::round((y1 + y2)/2);
     Point midPoint(xValue, yValue);
@@ -137,10 +145,10 @@ Point LineSegment::midpoint() {
 }
 
 double LineSegment::xIntercept() {  //Finish
-    double x1 = P1.getXValue();
-    double x2 = P2.getXValue();
-    double y1 = P1.getYValue();
-    double y2 = P2.getYValue();
+//    double x1 = P1.getXValue();
+//    double x2 = P2.getXValue();
+//    double y1 = P1.getYValue();
+//    double y2 = P2.getYValue();
 
     double xIntercept;
 
@@ -159,22 +167,26 @@ double LineSegment::xIntercept() {  //Finish
 }
 
 double LineSegment::yIntercept() {  //Finish
-    double x1 = P1.getXValue();
-    double x2 = P2.getXValue();
-    double y1 = P1.getYValue();
-    double y2 = P2.getYValue();
+//    double x1 = P1.getXValue();
+//    double x2 = P2.getXValue();
+//    double y1 = P1.getYValue();
+//    double y2 = P2.getYValue();
     double yIntercept;
     yIntercept = y1 - slope()*x1;
     return Math::round(yIntercept);
 }
 
 double LineSegment::slope() {
-    double x1 = P1.getXValue();
-    double x2 = P2.getXValue();
-    double y1 = P1.getYValue();
-    double y2 = P2.getYValue();
+//    double x1 = P1.getXValue();
+//    double x2 = P2.getXValue();
+//    double y1 = P1.getYValue();
+//    double y2 = P2.getYValue();
     double slope = Math::round((y2 - y1)/(x2-x1));
     return slope;
+}
+
+void LineSegment::displayEquation() {
+    cout << "y=" << slope() << "*x+" << yIntercept() << endl;
 }
 //
 //class Intervals {
@@ -239,17 +251,20 @@ int main() {
     cout << "Testing the squareroot function:" << endl;
     cout << square << endl;
 
-    cout << "Testing the midpoint" << endl;
+    cout << "Testing the midpoint:" << endl;
     lines.midpoint().display();
 
-    cout << "Testing the slope" << endl;
+    cout << "Testing the slope:" << endl;
     cout << lines.slope() << endl;
 
-    cout << "Testing the xIntercept" << endl;
+    cout << "Testing the xIntercept:" << endl;
     cout << lines.xIntercept() << endl;
 
-    cout << "Testing the yIntercept" << endl;
+    cout << "Testing the yIntercept:" << endl;
     cout << lines.yIntercept() << endl;
+
+    cout << "Testing Display Equation:" << endl;
+    lines.displayEquation();
 
     return 0;
 }
