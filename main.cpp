@@ -93,9 +93,9 @@ public:
     LineSegment (Point one, Point two);
     double length(); //return the length of the line segment
     Point midpoint (); //return the midpoint of the line segment
-    Point xIntercept (); //return the x-intercept of the line segment
+    double xIntercept (); //return the x-intercept of the line segment
     Point yIntercept (); //return the y-intercept of the line segment
-//    double slope (); //return the slope of the line segment
+    double slope (); //return the slope of the line segment
 //    bool itIntersects (LineSegment L); //returns true if L intersects
 //    //with this line segment
 //    Point intersectionPoint (LineSegment L);
@@ -136,12 +136,39 @@ Point LineSegment::midpoint() {
     return midPoint;
 }
 
-Point LineSegment::xIntercept() {  //Finish
+double LineSegment::xIntercept() {  //Finish
+    double x1 = P1.getXValue();
+    double x2 = P2.getXValue();
+    double y1 = P1.getYValue();
+    double y2 = P2.getYValue();
+
+    double xIntercept;
+
+    if (y1 + y2 <= y1)   { //Probably wrong
+        xIntercept = y1 - (slope()*(x1));
+    }
+    else if ( y2 + y1 <= y2)   {
+        xIntercept = y1 - (slope()*(x1));
+    }
+    else   {
+        //No x intercept
+    }
+
+    return Math::round(xIntercept);
 
 }
 
 Point LineSegment::yIntercept() {  //Finish
+    double test = slope();
+}
 
+double LineSegment::slope() {
+    double x1 = P1.getXValue();
+    double x2 = P2.getXValue();
+    double y1 = P1.getYValue();
+    double y2 = P2.getYValue();
+    double slope = Math::round((y2 - y1)/(x2-x1));
+    return slope;
 }
 //
 //class Intervals {
@@ -195,8 +222,8 @@ int main() {
     int test3 = *test2;
     double number = 1e-6;
     cout << test2 << ": " << number << endl;
-    Point a (4.0,5.1312);
-    Point b (6.0,10.0);
+    Point a (0,5.23);
+    Point b (5.23,0);
     LineSegment lines (a, b);
     double answer = lines.length();
     cout << "Testing the length function:" << endl;
@@ -204,10 +231,16 @@ int main() {
 
     double square = Math::squareroot(6745);
     cout << "Testing the squareroot function:" << endl;
-    cout << square;
+    cout << square << endl;
 
     cout << "Testing the midpoint" << endl;
     lines.midpoint().display();
+
+    cout << "Testing the slope" << endl;
+    cout << lines.slope() << endl;
+
+    cout << "Testing the xIntercept" << endl;
+    cout << lines.xIntercept() << endl;
 
 
 
