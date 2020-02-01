@@ -201,7 +201,10 @@ bool LineSegment::isParallel(LineSegment L) {
 }
 
 Point LineSegment::intersectionPoint(LineSegment L) {
-
+    double x = Math::round((L.yIntercept() - yIntercept())/(slope() - L.slope()));
+    double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
+    Point intersection ( x, y );
+    return intersection;
 }
 
 //
@@ -256,8 +259,8 @@ int main() {
     int test3 = *test2;
     double number = 1e-6;
     cout << test2 << ": " << number << endl;
-    Point pointOne (0, 6.52);
-    Point pointTwo(6.52, 0);
+    Point pointOne (0, 0);
+    Point pointTwo(5.23, 5.23);
     LineSegment line (pointOne, pointTwo);
     Point a (0,5.23);
     Point b (5.23,0);
@@ -293,7 +296,11 @@ int main() {
     else   {
         cout << "The lines are not parallel" << endl;
         cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+        cout << "Testing intersection point:" << endl;
+        lines.intersectionPoint(line).display();
     }
+
+
 
     return 0;
 }
