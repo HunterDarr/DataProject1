@@ -100,7 +100,7 @@ public:
     double xIntercept (); //return the x-intercept of the line segment
     double yIntercept (); //return the y-intercept of the line segment
     double slope (); //return the slope of the line segment
-//    bool itIntersects (LineSegment L); //returns true if L intersects
+    bool itIntersects (LineSegment L); //returns true if L intersects
 //    //with this line segment
     Point intersectionPoint (LineSegment L);
     bool isParallel (LineSegment L); //check if slopes are same
@@ -207,50 +207,70 @@ Point LineSegment::intersectionPoint(LineSegment L) {
     return intersection;
 }
 
-//
-//class Intervals {
-//protected:
-//    LineSegment* segments;
-//    int count;
-//    int maxSize;
-//public:
-//    Intervals (); //segments = NULL; count = 0; maxSize = 0;
-//    Intervals (int size); //non-default constructor
-//    void addLineSegment (LineSegment L);
-//    void display();
-///* display all line segment stored in
-// the y=mx+c format; see display for LineSegment and print points, length,
-// midpoint, x-intercept, y-intercept, for example:
-//Line Segment: 1
-//P1 = (3.0, 9.0); P2 = (8.0, 16.0)
-//slope = 1.4
-//equation = y = 1.4*x + 4.8
-//length = 8.60
-//mid point = (10.5, 12.5)
-//x-intercept = ...
-//y-intercept = ...
-//Line Segment: 2
-//P1 = (...); P2 = (...)
-//slope = ...
-//equation = y = ...
-//length = ...
-//mid point = ...
-//x-intercept = ...
-//y-intercept = ...
-//...
-//*/
-//};
-////some extra help below: in case you need it
-//Intervals::Intervals () {
-//    segments = NULL;
-//    count = 0;
-//    maxSize = 0;
-//}
-//Intervals:: Intervals (int size) {
-//    segments = new LineSegment [size];
-//    count = 0; //currently there is none
-//    maxSize = size;
-//}
+bool LineSegment::itIntersects(LineSegment L) {
+    bool doesIntersect = !isParallel(L);
+    return doesIntersect;
+}
+
+
+class Intervals {
+protected:
+    LineSegment* segments;
+    int count;
+    int maxSize;
+public:
+    Intervals (); //segments = NULL; count = 0; maxSize = 0;
+    Intervals (int size); //non-default constructor
+    void addLineSegment (LineSegment L);
+    void display();
+/* display all line segment stored in
+ the y=mx+c format; see display for LineSegment and print points, length,
+ midpoint, x-intercept, y-intercept, for example:
+Line Segment: 1
+P1 = (3.0, 9.0); P2 = (8.0, 16.0)
+slope = 1.4
+equation = y = 1.4*x + 4.8
+length = 8.60
+mid point = (10.5, 12.5)
+x-intercept = ...
+y-intercept = ...
+Line Segment: 2
+P1 = (...); P2 = (...)
+slope = ...
+equation = y = ...
+length = ...
+mid point = ...
+x-intercept = ...
+y-intercept = ...
+...
+*/
+};
+//some extra help below: in case you need it
+Intervals::Intervals () {
+    segments = NULL;
+    count = 0;
+    maxSize = 0;
+}
+
+Intervals::Intervals (int size) {
+    segments = new LineSegment [size];
+    count = 0; //currently there is none
+    maxSize = size;
+}
+
+void Intervals::addLineSegment(LineSegment L) {
+    segments[count] = L;
+    count = count + 1;
+}
+
+void Intervals::display() {
+    for ( int i = 0; i < count; i++ )   {
+        cout << "Line segment " << count+1 << endl;
+    }
+}
+
+
+
 
 int main() {
 
@@ -289,7 +309,7 @@ int main() {
     lines.displayEquation();
 
     cout << "Testing parallel boolean:" << endl;
-    if (lines.isParallel(line))   {
+    if (!lines.itIntersects(line))   {
         cout << "The lines are parallel" << endl;
         cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
     }
