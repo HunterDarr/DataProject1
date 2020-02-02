@@ -275,7 +275,6 @@ void Intervals::addLineSegment(LineSegment L) {
 
 void Intervals::display() {
     int segmentCounter = 1;
-    int testCounter = 0;
     for ( int i = 0; i < count; i++ )   {
         cout << "Line segment " << segmentCounter << ":" << endl;
 
@@ -294,7 +293,6 @@ void Intervals::display() {
 
         segments[i].displayEquation();
         segmentCounter = segmentCounter + 1;
-        testCounter = testCounter + 1;
     }
 }
 
@@ -303,70 +301,85 @@ void Intervals::display() {
 
 int main() {
 
-    int test = 25;
-    int *test2 = &test;
-    int test3 = *test2;
-    double number = 1e-6;
-    cout << test2 << ": " << number << endl;
-    Point pointOne (0, 0);
-    Point pointTwo(5.23, 5.23);
-    LineSegment line (pointOne, pointTwo);
-    Point a (0,5.23);
-    Point b (5.23,0);
-    LineSegment lines (a, b);
-    double answer = lines.length();
-    cout << "Testing the length function:" << endl;
-    cout << answer << endl;
 
-    double square = Math::squareroot(6745);
-    cout << "Testing the squareroot function:" << endl;
-    cout << square << endl;
+//    int test = 25;
+//    int *test2 = &test;
+//    int test3 = *test2;
+//    double number = 1e-6;
+//    cout << test2 << ": " << number << endl;
+//    Point pointOne (0, 0);
+//    Point pointTwo(5.23, 5.23);
+//    LineSegment line (pointOne, pointTwo);
+//    Point a (0,5.23);
+//    Point b (5.23,0);
+//    LineSegment lines (a, b);
+//    double answer = lines.length();
+//    cout << "Testing the length function:" << endl;
+//    cout << answer << endl;
+//
+//    double square = Math::squareroot(6745);
+//    cout << "Testing the squareroot function:" << endl;
+//    cout << square << endl;
+//
+//    cout << "Testing the midpoint:" << endl;
+//    lines.midpoint().display();
+//
+//    cout << "Testing the slope:" << endl;
+//    cout << lines.slope() << endl;
+//
+//    cout << "Testing the xIntercept:" << endl;
+//    cout << lines.xIntercept() << endl;
+//
+//    cout << "Testing the yIntercept:" << endl;
+//    cout << lines.yIntercept() << endl;
+//
+//    cout << "Testing Display Equation:" << endl;
+//    lines.displayEquation();
+//
+//    cout << "Testing parallel boolean:" << endl;
+//    if (!lines.itIntersects(line))   {
+//        cout << "The lines are parallel" << endl;
+//        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+//    }
+//    else   {
+//        cout << "The lines are not parallel" << endl;
+//        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+//        cout << "Testing intersection point:" << endl;
+//        lines.intersectionPoint(line).display();
+//    }
+//    cout << "Testing Intervals and Interval display:" << endl;
+//    Intervals testing (3);
+//
+//    Point point1 (0, 0);
+//    Point point2(5.23, 5.23);
+//    LineSegment line1 (point1, point2);
+//    Point point3 (0, 5.23);
+//    Point point4(5.23, 0);
+//    LineSegment line2 (point3, point4);
+//    Point point5 (0, 6.52);
+//    Point point6(6.52, 0);
+//    LineSegment line3 (point5, point6);
+//
+//    testing.addLineSegment(line1);
+//    testing.addLineSegment(line2);
+//    testing.addLineSegment(line3);
+//    testing.display();
 
-    cout << "Testing the midpoint:" << endl;
-    lines.midpoint().display();
-
-    cout << "Testing the slope:" << endl;
-    cout << lines.slope() << endl;
-
-    cout << "Testing the xIntercept:" << endl;
-    cout << lines.xIntercept() << endl;
-
-    cout << "Testing the yIntercept:" << endl;
-    cout << lines.yIntercept() << endl;
-
-    cout << "Testing Display Equation:" << endl;
-    lines.displayEquation();
-
-    cout << "Testing parallel boolean:" << endl;
-    if (!lines.itIntersects(line))   {
-        cout << "The lines are parallel" << endl;
-        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
+    double linePoint1;
+    double linePoint2;
+    double linePoint3;
+    double linePoint4;
+    int numberOfLines;
+    cin >> numberOfLines;
+    Intervals interval (numberOfLines);
+    for ( int i = 0; i < numberOfLines; i++ )   {
+        cin >> linePoint1 >> linePoint2 >> linePoint3 >> linePoint4;
+        Point pointOne (linePoint1, linePoint2);
+        Point pointTwo(linePoint3, linePoint4);
+        LineSegment line (pointOne, pointTwo);
+        interval.addLineSegment(line);
     }
-    else   {
-        cout << "The lines are not parallel" << endl;
-        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
-        cout << "Testing intersection point:" << endl;
-        lines.intersectionPoint(line).display();
-    }
-    cout << "Testing Intervals and Interval display:" << endl;
-    Intervals testing (3);
-
-    Point point1 (0, 0);
-    Point point2(5.23, 5.23);
-    LineSegment line1 (pointOne, pointTwo);
-    Point point3 (0, 5.23);
-    Point point4(5.23, 0);
-    LineSegment line2 (pointOne, pointTwo);
-    Point point5 (0, 6.52);
-    Point point6(6.52, 0);
-    LineSegment line3 (pointOne, pointTwo);
-
-    testing.addLineSegment(line1);
-    testing.addLineSegment(line2);
-    testing.addLineSegment(line3);
-    testing.display();
-
-
+    interval.display();
 
 
     return 0;
