@@ -380,7 +380,7 @@ int main() {
         interval.addLineSegment(line);
     }
     interval.display();
-
+//FINISH OUTPUTTING  PARALLEL CODE AND INTERSECTIONS
 
     return 0;
 }
