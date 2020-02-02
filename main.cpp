@@ -225,7 +225,7 @@ Point LineSegment::getP2() {
 
 class Intervals {
 protected:
-    LineSegment* segments;
+    LineSegment* segments;  //FIX THIS
     int count;
     int maxSize;
 public:
