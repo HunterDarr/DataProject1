@@ -105,6 +105,8 @@ public:
     Point intersectionPoint (LineSegment L);
     bool isParallel (LineSegment L); //check if slopes are same
     void displayEquation (); // you will print in the format
+    Point getP1 ();
+    Point getP2 ();
 //    // y = m * x + c where m is the slope
 //    // and c is the y-intercept
 //    //other methods that are necessary
@@ -212,6 +214,14 @@ bool LineSegment::itIntersects(LineSegment L) {
     return doesIntersect;
 }
 
+Point LineSegment::getP1() {
+    return P1;
+}
+
+Point LineSegment::getP2() {
+    return P2;
+}
+
 
 class Intervals {
 protected:
@@ -264,8 +274,27 @@ void Intervals::addLineSegment(LineSegment L) {
 }
 
 void Intervals::display() {
+    int segmentCounter = 1;
+    int testCounter = 0;
     for ( int i = 0; i < count; i++ )   {
-        cout << "Line segment " << count+1 << endl;
+        cout << "Line segment " << segmentCounter << ":" << endl;
+
+        cout << "(" << segments[i].getP1().getXValue() << ", " << segments[i].getP1().getYValue() << "),(" <<
+        segments[i].getP2().getXValue() << ", " << segments[i].getP2().getYValue() << ")" << endl;
+
+        cout << "Slope:" << segments[i].slope() << endl;
+
+        cout << "Midpoint:";
+        segments[i].midpoint().display();
+
+        cout << "X Intercept:" << segments[i].xIntercept() << endl;
+        cout << "Y Intercept:" << segments[i].yIntercept() << endl;
+
+        cout << "Length:" << segments[i].length() << endl;
+
+        segments[i].displayEquation();
+        segmentCounter = segmentCounter + 1;
+        testCounter = testCounter + 1;
     }
 }
 
@@ -319,6 +348,24 @@ int main() {
         cout << "Testing intersection point:" << endl;
         lines.intersectionPoint(line).display();
     }
+    cout << "Testing Intervals and Interval display:" << endl;
+    Intervals testing (3);
+
+    Point point1 (0, 0);
+    Point point2(5.23, 5.23);
+    LineSegment line1 (pointOne, pointTwo);
+    Point point3 (0, 5.23);
+    Point point4(5.23, 0);
+    LineSegment line2 (pointOne, pointTwo);
+    Point point5 (0, 6.52);
+    Point point6(6.52, 0);
+    LineSegment line3 (pointOne, pointTwo);
+
+    testing.addLineSegment(line1);
+    testing.addLineSegment(line2);
+    testing.addLineSegment(line3);
+    testing.display();
+
 
 
 
