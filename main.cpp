@@ -174,7 +174,7 @@ double LineSegment::yIntercept() {  //Finish
 //    double y1 = P1.getYValue();
 //    double y2 = P2.getYValue();
     double yIntercept;
-    yIntercept = y1 - slope()*x1;
+    yIntercept = y1 - (((y2 - y1)/(x2 - x1))*x1);
     return Math::round(yIntercept);
 }
 
