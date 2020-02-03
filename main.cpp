@@ -210,14 +210,46 @@ Point LineSegment::intersectionPoint(LineSegment L) {
 }
 
 bool LineSegment::itIntersects(LineSegment L) { //FIX THIS FUNCTION. REMEMBER THE LINES HAVE LENGTH. THEY DONT GO ON FOREVER!!
-    double doesIntersect; // Look at (19) in math equations sheet.
-    if ( (slope() == L.slope()) && (yIntercept() != L.yIntercept()) )   {
-        doesIntersect = false;
-    }
-    else   {
+    bool doesIntersect;
+    double d1u1 = getP2().getXValue() - getP1().getXValue();
+    double d1v1 = getP2().getYValue() - getP1().getYValue();
+    double d1u2 = L.getP1().getXValue() - getP1().getXValue();
+    double d1v2 = L.getP1().getYValue() - getP1().getYValue();
+    double d1 = (d1u1 * d1v2) - (d1u2 * d1v1);
+    double d2u1 = getP2().getXValue() - getP1().getXValue();
+    double d2v1 = getP2().getYValue() - getP1().getYValue();
+    double d2u2 = L.getP2().getXValue() - getP1().getXValue();
+    double d2v2 = L.getP2().getYValue() - getP1().getYValue();
+    double d2 = (d2u1 * d2v2) - (d2u2 * d2v1);
+    double d3u1 = L.getP2().getXValue() - L.getP1().getXValue();
+    double d3v1 = L.getP2().getYValue() - L.getP1().getYValue();
+    double d3u2 = getP1().getXValue() - L.getP1().getXValue();
+    double d3v2 = getP1().getYValue() - L.getP1().getYValue();
+    double d3 = (d3u1 * d3v2) - (d3u2 * d3v1);
+    double d4u1 = L.getP2().getXValue() - L.getP1().getXValue();
+    double d4v1 = L.getP2().getYValue() - L.getP1().getYValue();
+    double d4u2 = getP2().getXValue() - getP1().getXValue();
+    double d4v2 = getP2().getYValue() - getP1().getYValue();
+    double d4 = (d4u1 * d4v2) - (d4u2 * d4v1);
+
+    if ( ((d1 * d2 ) <= 0 ) && ((d3 * d4) <= 0))   {
         doesIntersect = true;
     }
+    else   {
+        doesIntersect = false;
+    }
+
     return doesIntersect;
+
+
+//    double doesIntersect; // Look at (19) in math equations sheet.
+//    if ( (slope() == L.slope()) && (yIntercept() != L.yIntercept()) )   {
+//        doesIntersect = false;
+//    }
+//    else   {
+//        doesIntersect = true;
+//    }
+//    return doesIntersect;
 }
 
 Point LineSegment::getP1() {
@@ -404,6 +436,10 @@ int main() {
                     cout << "The line segments compared are segments[" << i << "] and segments[" << j <<
                     "]: Intersection Point :";
                     interval.getLine(i).intersectionPoint(interval.getLine(j)).display();
+                }
+                else if (!doesIntersect && !interval.getLine(i).isParallel(interval.getLine(j)))   {
+                    cout << "The line segments compared are segments[" << i << "] and segments[" << j <<
+                         "]: Not Parallel and not Intersecting" << endl;
                 }
                 else {
                     cout << "The line segments compared are segments[" << i << "] and segments[" << j <<
