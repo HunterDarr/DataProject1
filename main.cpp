@@ -233,6 +233,7 @@ public:
     Intervals (int size); //non-default constructor
     void addLineSegment (LineSegment L);
     void display();
+    LineSegment getLine (int arrayIndex);
 /* display all line segment stored in
  the y=mx+c format; see display for LineSegment and print points, length,
  midpoint, x-intercept, y-intercept, for example:
@@ -294,6 +295,10 @@ void Intervals::display() {
         segments[i].displayEquation();
         segmentCounter = segmentCounter + 1;
     }
+}
+
+LineSegment Intervals::getLine(int arrayIndex) {
+    return segments[arrayIndex];
 }
 
 
@@ -375,13 +380,33 @@ int main() {
     for ( int i = 0; i < numberOfLines; i++ )   {
         cin >> linePoint1 >> linePoint2 >> linePoint3 >> linePoint4;
         Point pointOne (linePoint1, linePoint2);
-        Point pointTwo(linePoint3, linePoint4);
+        Point pointTwo (linePoint3, linePoint4);
         LineSegment line (pointOne, pointTwo);
         interval.addLineSegment(line);
     }
     interval.display();
-//FINISH OUTPUTTING  PARALLEL CODE AND INTERSECTIONS
 
+//FINISH OUTPUTTING  PARALLEL CODE AND INTERSECTIONS
+    bool doesIntersect = false;
+    int jCounter = 1;
+    for ( int i = 0; i < numberOfLines; i++ )   {
+        for ( int j = jCounter; j < numberOfLines; j++ )   {
+            cout << "Value of i: " << i << " Value of j: " << j << endl;
+            if (!(i == j))   {
+                doesIntersect = interval.getLine(i).itIntersects(interval.getLine(j));
+                if (doesIntersect)   {
+                    cout << "The line segments compared are segments[" << i << "] and segments[" << j <<
+                    "]: Intersection Point :";
+                    interval.getLine(i).intersectionPoint(interval.getLine(j)).display();
+                }
+                else {
+                    cout << "The line segments compared are segments[" << i << "] and segments[" << j <<
+                         "]: Lines are Parallel" << endl;
+                }
+            }
+        }
+        jCounter = jCounter + 1;
+    }
     return 0;
 }
 
