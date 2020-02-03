@@ -316,9 +316,9 @@ void Intervals::display() {
     int segmentCounter = 1;
     for ( int i = 0; i < count; i++ )   {
         cout << "Line Segment " << segmentCounter << ":" << endl;
-
-        cout << "(" << segments[i].getP1().getXValue() << ", " << segments[i].getP1().getYValue() << "),(" <<
-        segments[i].getP2().getXValue() << ", " << segments[i].getP2().getYValue() << ")" << endl;
+//Just changed
+        cout << "(" << Math::round(segments[i].getP1().getXValue()) << ", " << Math::round(segments[i].getP1().getYValue()) << "),(" <<
+        Math::round(segments[i].getP2().getXValue()) << ", " << Math::round(segments[i].getP2().getYValue()) << ")" << endl;
 
         cout << "Slope:" << segments[i].slope() << endl;
 
