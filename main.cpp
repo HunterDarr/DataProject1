@@ -79,8 +79,12 @@ double Math::squareroot(double number) {
 }
 
 double Math::round(double var) {
-    double value = (int)(var * 100.0);
-    return (double)value / 100.0;
+//    if(var<0)
+//        var -= 0.005;
+
+    double value = (int)(var * 100.0); // Changed
+    double result = (double)value / 100.0;
+    return result;
 }
 
 
@@ -203,7 +207,10 @@ bool LineSegment::isParallel(LineSegment L) {
 }
 
 Point LineSegment::intersectionPoint(LineSegment L) {
-    double x = Math::round((L.yIntercept() - yIntercept())/(slope() - L.slope()));
+    double beforeX = (L.yIntercept() - yIntercept())/(slope() - L.slope());
+    if(beforeX<0)
+        beforeX -= 0.005;
+    double x =Math::round(beforeX);
     double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
     Point intersection ( x, y );
     return intersection;
@@ -233,6 +240,12 @@ bool LineSegment::itIntersects(LineSegment L) { //FIX THIS FUNCTION. REMEMBER TH
     double d4 = (d4u1 * d4v2) - (d4u2 * d4v1);
 
     if ( ((d1 * d2 ) <= 0 ) && ((d3 * d4) <= 0))   {
+//        double xOfIntersectionPoint = intersectionPoint(L).getXValue();
+//        if ( (xOfIntersectionPoint >= getP1().getXValue() && xOfIntersectionPoint <= getP2().getXValue()) ||
+//                (xOfIntersectionPoint <= getP1().getXValue() && xOfIntersectionPoint >= getP2().getXValue())) {
+//            doesIntersect = true;
+//        }
+//        doesIntersect = false;
         doesIntersect = true;
     }
     else   {
