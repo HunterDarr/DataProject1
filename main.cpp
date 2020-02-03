@@ -168,7 +168,7 @@ double LineSegment::xIntercept() {  //Finish
 //        //No x intercept
 //    }
 
-    return Math::round(xIntercept);
+    return xIntercept;
 
 }
 
@@ -179,25 +179,26 @@ double LineSegment::yIntercept() {  //Finish
 //    double y2 = P2.getYValue();
     double yIntercept;
     yIntercept = y1 - (((y2 - y1)/(x2 - x1))*x1);
-    return Math::round(yIntercept);
+    return yIntercept;
 }
+
 
 double LineSegment::slope() {
 //    double x1 = P1.getXValue();
 //    double x2 = P2.getXValue();
 //    double y1 = P1.getYValue();
 //    double y2 = P2.getYValue();
-    double slope = Math::round((y2 - y1)/(x2-x1));
+    double slope =(y2 - y1)/(x2-x1);
     return slope;
 }
 
 void LineSegment::displayEquation() {
-    cout << "y=" << slope() << "*x+" << yIntercept() << endl;
+    cout << "y=" << Math::round(slope()) << "*x+" << Math::round(yIntercept()) << endl;
 }
 
 bool LineSegment::isParallel(LineSegment L) {
-    double slopeOne = slope();
-    double slopeTwo = L.slope();
+    double slopeOne = Math::round(slope());
+    double slopeTwo = Math::round(L.slope());
     if ( slopeOne == slopeTwo )   {
         return true;
     }
@@ -208,13 +209,13 @@ bool LineSegment::isParallel(LineSegment L) {
 
 Point LineSegment::intersectionPoint(LineSegment L) {
     double beforeX = (L.yIntercept() - yIntercept())/(slope() - L.slope());
-    if(beforeX<0)   {
-        beforeX -= 0.005;
-    }
+//    if(beforeX<0)   {
+//        beforeX -= 0.005;
+//    }
 //    if (beforeX > 0)   {
 //        beforeX += 0.005;
 //    }
-    double x =Math::round(beforeX);
+    double x = Math::round(beforeX);
     double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
     Point intersection ( x, y );
     return intersection;
@@ -337,13 +338,13 @@ void Intervals::display() {
         cout << "(" << Math::round(segments[i].getP1().getXValue()) << ", " << Math::round(segments[i].getP1().getYValue()) << "),(" <<
         Math::round(segments[i].getP2().getXValue()) << ", " << Math::round(segments[i].getP2().getYValue()) << ")" << endl;
 
-        cout << "Slope:" << segments[i].slope() << endl;
+        cout << "Slope:" << Math::round(segments[i].slope()) << endl;
 
         cout << "Midpoint:";
         segments[i].midpoint().display();
 
-        cout << "X Intercept:" << segments[i].xIntercept() << endl;
-        cout << "Y Intercept:" << segments[i].yIntercept() << endl;
+        cout << "X Intercept:" << Math::round(segments[i].xIntercept()) << endl;
+        cout << "Y Intercept:" << Math::round(segments[i].yIntercept()) << endl;
 
         cout << "Length:" << segments[i].length() << endl;
 
