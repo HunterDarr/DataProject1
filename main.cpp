@@ -153,16 +153,16 @@ double LineSegment::xIntercept() {  //Finish
 //    double y2 = P2.getYValue();
 
     double xIntercept;
-
-    if (y1 + y2 <= y1)   { //Probably wrong
-        xIntercept = y1 - (slope()*(x1));
-    }
-    else if ( y2 + y1 <= y2)   {
-        xIntercept = x1 - (slope()*(y1));
-    }
-    else   {
-        //No x intercept
-    }
+    xIntercept = x1 - (((x2-x1)/(y2-y1))*(y1));  // Major XIntercept problems... FIX! Might be fixed...
+//    if (y1 + y2 <= y1)   { //Probably wrong
+//        xIntercept = y1 - (slope()*(x1));
+//    }
+//    else if ( y2 + y1 <= y2)   {
+//        xIntercept = x1 - (slope()*(y1));
+//    }
+//    else   {
+//        //No x intercept
+//    }
 
     return Math::round(xIntercept);
 
@@ -209,8 +209,14 @@ Point LineSegment::intersectionPoint(LineSegment L) {
     return intersection;
 }
 
-bool LineSegment::itIntersects(LineSegment L) {
-    bool doesIntersect = !isParallel(L);
+bool LineSegment::itIntersects(LineSegment L) { //FIX THIS FUNCTION. REMEMBER THE LINES HAVE LENGTH. THEY DONT GO ON FOREVER!!
+    double doesIntersect; // Look at (19) in math equations sheet.
+    if ( (slope() == L.slope()) && (yIntercept() != L.yIntercept()) )   {
+        doesIntersect = false;
+    }
+    else   {
+        doesIntersect = true;
+    }
     return doesIntersect;
 }
 
@@ -277,7 +283,7 @@ void Intervals::addLineSegment(LineSegment L) {
 void Intervals::display() {
     int segmentCounter = 1;
     for ( int i = 0; i < count; i++ )   {
-        cout << "Line segment " << segmentCounter << ":" << endl;
+        cout << "Line Segment " << segmentCounter << ":" << endl;
 
         cout << "(" << segments[i].getP1().getXValue() << ", " << segments[i].getP1().getYValue() << "),(" <<
         segments[i].getP2().getXValue() << ", " << segments[i].getP2().getYValue() << ")" << endl;
@@ -391,7 +397,7 @@ int main() {
     int jCounter = 1;
     for ( int i = 0; i < numberOfLines; i++ )   {
         for ( int j = jCounter; j < numberOfLines; j++ )   {
-            cout << "Value of i: " << i << " Value of j: " << j << endl;
+//            cout << "Value of i: " << i << " Value of j: " << j << endl;
             if (!(i == j))   {
                 doesIntersect = interval.getLine(i).itIntersects(interval.getLine(j));
                 if (doesIntersect)   {
