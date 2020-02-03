@@ -208,8 +208,12 @@ bool LineSegment::isParallel(LineSegment L) {
 
 Point LineSegment::intersectionPoint(LineSegment L) {
     double beforeX = (L.yIntercept() - yIntercept())/(slope() - L.slope());
-    if(beforeX<0)
+    if(beforeX<0)   {
         beforeX -= 0.005;
+    }
+//    if (beforeX > 0)   {
+//        beforeX += 0.005;
+//    }
     double x =Math::round(beforeX);
     double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
     Point intersection ( x, y );
