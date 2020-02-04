@@ -12,6 +12,7 @@
 #include <iostream>
 using namespace std;
 
+
 /**
  * Description:
  * The Point class is used to store the values of x and y in a point that can be
@@ -26,8 +27,8 @@ using namespace std;
  *
  * Methods:
  * - setLocation(double xvalue, double yvalue); Sets the x and y class variables.
- * - getXValue(); A getter method for the x class variable.
- * - getYValue(); A getter method for the y class variable.
+ * - getXValue(); A getter function/method for the x class variable.
+ * - getYValue(); A getter function/method for the y class variable.
  * - display(); Uses cout to print the formatted point to the console.
  */
 class Point {
@@ -73,6 +74,7 @@ void Point::display() {
     cout<< "(" << x << ", " << y << ")" << endl;
 }
 
+
 /**
  * Description:
  * The Math class is used to simplify the math calculations throughout the project.
@@ -81,9 +83,11 @@ void Point::display() {
  *
  *
  * Constructors:
+ * - N/A
  *
  * Methods:
- *
+ * - squareroot(double number); Calculates the square root of a double.
+ * - round(double var); Rounds a double.
  */
 class Math {
 public:
@@ -125,6 +129,38 @@ double Math::round(double var) {
 }
 
 
+/**
+ * Description:
+ * The LineSegment class is as its name implies. The LineSegment class represents a line segment by containing
+ * two Point values. These point values are stored as class variables for the various functions/methods to use.
+ * x1 represents the x value in P1.
+ * x2 represents the x value in P2.
+ * y1 represents the y value in P1.
+ * y2 represents the y value in P2.
+ *
+ *
+ * Constructors:
+ * - LineSegment (); Default constructor. Should not be used.
+ * - LineSegment (Point one, Point two); Sets the class variables P1 and P2 to the given points.
+ *
+ * Methods:
+ * - length(); Calculates the length of the line segment
+ * - midpoint (); Calculates the midpoint of the line segment.
+ * - xIntercept (); Calculates the xIntercept of the line segment.
+ * - yIntercept (); Calculates the yintercept of the line segment.
+ * - slope (); Calculates the slope of the line segment.
+ * - itIntersects (LineSegment L); Determines (true or false) whether or not the line segment and
+ *   a given line segment intersect.
+ * - intersectionPoint (LineSegment L); Calculates the intersection point of the line segment
+ *   and a given line segment.
+ * - isParallel (LineSegment L); Determines (true or false) whether or not the line segment and
+ *   a given line segment are parallel.
+ * - displayEquation (); Prints the equation of the line segment in the format of y = mx + b.
+ * - getP1 (); A getter function/methed for class variable P1. Returns the first point
+ *   of the line segment.
+ * - getP2 (); A getter function/method for class variable P2. Returns the second point
+ *   of the line segment.
+ */
 class LineSegment {
 protected:
     Point P1;
@@ -169,8 +205,8 @@ LineSegment::LineSegment(Point one, Point two) {
 
 double LineSegment::length() {
     double length;
-    length = Math::squareroot(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))); //FIX
-    return Math::round(length);
+    length = Math::squareroot(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2)));
+    return length;
 }
 
 Point LineSegment::midpoint() {
@@ -270,9 +306,27 @@ Point LineSegment::getP2() {
 }
 
 
+/**
+ * Description:
+ * The Intervals class holds an array of line segments in order for the line segments
+ * to be organized, displayed, added to, and rotated through for calculations in main().
+ *
+ *
+ * Constructors:
+ * - Intervals (); Default constructor.
+ * - Intervals (int size); Initializes the line segment array, sets count to 0,
+ *   and maxSize to the given size.
+ *
+ * Methods:
+ * - addLineSegment (LineSegment L); Adds a line segment to the array and increases count by 1.
+ * - display(); Displays the name, points, slope, midpoint, intercepts, length,
+ *   and equation of a line segment.
+ * - getLine (int arrayIndex); A getter function/method for returning a line segment at the
+ *   given index of the array.
+ */
 class Intervals {
 protected:
-    LineSegment* segments;  //FIX THIS
+    LineSegment* segments;
     int count;
     int maxSize;
 public:
@@ -281,27 +335,6 @@ public:
     void addLineSegment (LineSegment L);
     void display();
     LineSegment getLine (int arrayIndex);
-/* display all line segment stored in
- the y=mx+c format; see display for LineSegment and print points, length,
- midpoint, x-intercept, y-intercept, for example:
-Line Segment: 1
-P1 = (3.0, 9.0); P2 = (8.0, 16.0)
-slope = 1.4
-equation = y = 1.4*x + 4.8
-length = 8.60
-mid point = (10.5, 12.5)
-x-intercept = ...
-y-intercept = ...
-Line Segment: 2
-P1 = (...); P2 = (...)
-slope = ...
-equation = y = ...
-length = ...
-mid point = ...
-x-intercept = ...
-y-intercept = ...
-...
-*/
 };
 
 
@@ -337,7 +370,7 @@ void Intervals::display() {
         cout << "X Intercept:" << Math::round(segments[i].xIntercept()) << endl;
         cout << "Y Intercept:" << Math::round(segments[i].yIntercept()) << endl;
 
-        cout << "Length:" << segments[i].length() << endl;
+        cout << "Length:" << Math::round(segments[i].length()) << endl;
 
         segments[i].displayEquation();
         segmentCounter = segmentCounter + 1;
@@ -348,7 +381,13 @@ LineSegment Intervals::getLine(int arrayIndex) {
     return segments[arrayIndex];
 }
 
-
+/**
+ * Description:
+ * main() is the main method of this program. It handles all of the inputs and structures the outputs.
+ * main() also contains the nested for loop responsible for comparing line segments.
+ * main() calls upon the functions/methods in different classes and brings everything together.
+ * @return
+ */
 int main() {
     double linePoint1;
     double linePoint2;
