@@ -1,9 +1,36 @@
+/**
+ * CS-2413
+ * project1.cpp
+ * Purpose: Create line segments given x and y values for points and
+ * then calculate various mathematical functions regarding the line segments.
+ *
+ * @author Hunter Darr
+ * @Version 1.0 2/3/2020
+ */
+
+
 #include <iostream>
 using namespace std;
 
-
+/**
+ * Description:
+ * The Point class is used to store the values of x and y in a point that can be
+ * accessed by different functions/methods.
+ * x and y are provided by input in the main method.
+ *
+ *
+ * Constructors:
+ * - Point(); Default constructor.
+ * - Point(double xvalue, double yvalue); Non-default constructor.
+ *   Sets the protected class variables, x and y, to the xvalue and yvalue parameters.
+ *
+ * Methods:
+ * - setLocation(double xvalue, double yvalue); Sets the x and y class variables.
+ * - getXValue(); A getter method for the x class variable.
+ * - getYValue(); A getter method for the y class variable.
+ * - display(); Uses cout to print the formatted point to the console.
+ */
 class Point {
-
 protected:
     double x; //x coordinate value
     double y; //y coordinate value
@@ -17,6 +44,7 @@ public:
     void display(); // Print (0.0, 0.0)
     //other methods that are necessary
 };
+
 
 Point::Point() {
     x = 0.0;
@@ -45,12 +73,24 @@ void Point::display() {
     cout<< "(" << x << ", " << y << ")" << endl;
 }
 
-
+/**
+ * Description:
+ * The Math class is used to simplify the math calculations throughout the project.
+ * To find the square root of a number write "Math::square root(numberToTakeSquareRootOf)".
+ * To round a number write "Math::round(numberToRound)".
+ *
+ *
+ * Constructors:
+ *
+ * Methods:
+ *
+ */
 class Math {
 public:
     static double squareroot(double number);
     static double round(double var);
 };
+
 
 double Math::squareroot(double number) {
     double eps = 1e-6;
@@ -79,9 +119,6 @@ double Math::squareroot(double number) {
 }
 
 double Math::round(double var) {
-//    if(var<0)
-//        var -= 0.005;
-
     double value = (int)(var * 100.0); // Changed
     double result = (double)value / 100.0;
     return result;
@@ -116,6 +153,7 @@ public:
 //    //other methods that are necessary
 };
 
+
 LineSegment::LineSegment() {
     //Shouldn't be used.
 }
@@ -131,63 +169,31 @@ LineSegment::LineSegment(Point one, Point two) {
 
 double LineSegment::length() {
     double length;
-//    double x1 = P1.getXValue();
-//    double x2 = P2.getXValue();
-//    double y1 = P1.getYValue();
-//    double y2 = P2.getYValue();
     length = Math::squareroot(((x1 - x2)*(x1 - x2)) + ((y1 - y2)*(y1 - y2))); //FIX
     return Math::round(length);
 }
 
 Point LineSegment::midpoint() {
-//    double x1 = P1.getXValue();
-//    double x2 = P2.getXValue();
-//    double y1 = P1.getYValue();
-//    double y2 = P2.getYValue();
     double xValue = Math::round((x1 + x2)/2);
     double yValue = Math::round((y1 + y2)/2);
     Point midPoint(xValue, yValue);
     return midPoint;
 }
 
-double LineSegment::xIntercept() {  //Finish
-//    double x1 = P1.getXValue();
-//    double x2 = P2.getXValue();
-//    double y1 = P1.getYValue();
-//    double y2 = P2.getYValue();
-
+double LineSegment::xIntercept() {
     double xIntercept;
-    xIntercept = x1 - (((x2-x1)/(y2-y1))*(y1));  // Major XIntercept problems... FIX! Might be fixed...
-//    if (y1 + y2 <= y1)   { //Probably wrong
-//        xIntercept = y1 - (slope()*(x1));
-//    }
-//    else if ( y2 + y1 <= y2)   {
-//        xIntercept = x1 - (slope()*(y1));
-//    }
-//    else   {
-//        //No x intercept
-//    }
-
+    xIntercept = x1 - (((x2-x1)/(y2-y1))*(y1));
     return xIntercept;
 
 }
 
-double LineSegment::yIntercept() {  //Finish
-//    double x1 = P1.getXValue();
-//    double x2 = P2.getXValue();
-//    double y1 = P1.getYValue();
-//    double y2 = P2.getYValue();
+double LineSegment::yIntercept() {
     double yIntercept;
     yIntercept = y1 - (((y2 - y1)/(x2 - x1))*x1);
     return yIntercept;
 }
 
-
 double LineSegment::slope() {
-//    double x1 = P1.getXValue();
-//    double x2 = P2.getXValue();
-//    double y1 = P1.getYValue();
-//    double y2 = P2.getYValue();
     double slope =(y2 - y1)/(x2-x1);
     return slope;
 }
@@ -209,65 +215,50 @@ bool LineSegment::isParallel(LineSegment L) {
 
 Point LineSegment::intersectionPoint(LineSegment L) {
     double beforeX = (L.yIntercept() - yIntercept())/(slope() - L.slope());
-//    if(beforeX<0)   {
-//        beforeX -= 0.005;
-//    }
-//    if (beforeX > 0)   {
-//        beforeX += 0.005;
-//    }
     double x = Math::round(beforeX);
     double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
     Point intersection ( x, y );
     return intersection;
 }
 
-bool LineSegment::itIntersects(LineSegment L) { //FIX THIS FUNCTION. REMEMBER THE LINES HAVE LENGTH. THEY DONT GO ON FOREVER!!
+bool LineSegment::itIntersects(LineSegment L) {
     bool doesIntersect;
+
     double d1u1 = getP2().getXValue() - getP1().getXValue();
     double d1v1 = getP2().getYValue() - getP1().getYValue();
     double d1u2 = L.getP1().getXValue() - getP1().getXValue();
     double d1v2 = L.getP1().getYValue() - getP1().getYValue();
+
     double d1 = (d1u1 * d1v2) - (d1u2 * d1v1);
+
     double d2u1 = getP2().getXValue() - getP1().getXValue();
     double d2v1 = getP2().getYValue() - getP1().getYValue();
     double d2u2 = L.getP2().getXValue() - getP1().getXValue();
     double d2v2 = L.getP2().getYValue() - getP1().getYValue();
+
     double d2 = (d2u1 * d2v2) - (d2u2 * d2v1);
+
     double d3u1 = L.getP2().getXValue() - L.getP1().getXValue();
     double d3v1 = L.getP2().getYValue() - L.getP1().getYValue();
     double d3u2 = getP1().getXValue() - L.getP1().getXValue();
     double d3v2 = getP1().getYValue() - L.getP1().getYValue();
+
     double d3 = (d3u1 * d3v2) - (d3u2 * d3v1);
+
     double d4u1 = L.getP2().getXValue() - L.getP1().getXValue();
     double d4v1 = L.getP2().getYValue() - L.getP1().getYValue();
     double d4u2 = getP2().getXValue() - getP1().getXValue();
     double d4v2 = getP2().getYValue() - getP1().getYValue();
+
     double d4 = (d4u1 * d4v2) - (d4u2 * d4v1);
 
     if ( ((d1 * d2 ) <= 0 ) && ((d3 * d4) <= 0))   {
-//        double xOfIntersectionPoint = intersectionPoint(L).getXValue();
-//        if ( (xOfIntersectionPoint >= getP1().getXValue() && xOfIntersectionPoint <= getP2().getXValue()) ||
-//                (xOfIntersectionPoint <= getP1().getXValue() && xOfIntersectionPoint >= getP2().getXValue())) {
-//            doesIntersect = true;
-//        }
-//        doesIntersect = false;
         doesIntersect = true;
     }
     else   {
         doesIntersect = false;
     }
-
     return doesIntersect;
-
-
-//    double doesIntersect; // Look at (19) in math equations sheet.
-//    if ( (slope() == L.slope()) && (yIntercept() != L.yIntercept()) )   {
-//        doesIntersect = false;
-//    }
-//    else   {
-//        doesIntersect = true;
-//    }
-//    return doesIntersect;
 }
 
 Point LineSegment::getP1() {
@@ -285,7 +276,7 @@ protected:
     int count;
     int maxSize;
 public:
-    Intervals (); //segments = NULL; count = 0; maxSize = 0;
+    Intervals (); //Defualt constructor
     Intervals (int size); //non-default constructor
     void addLineSegment (LineSegment L);
     void display();
@@ -312,7 +303,8 @@ y-intercept = ...
 ...
 */
 };
-//some extra help below: in case you need it
+
+
 Intervals::Intervals () {
     segments = NULL;
     count = 0;
@@ -321,7 +313,7 @@ Intervals::Intervals () {
 
 Intervals::Intervals (int size) {
     segments = new LineSegment [size];
-    count = 0; //currently there is none
+    count = 0;
     maxSize = size;
 }
 
@@ -334,7 +326,6 @@ void Intervals::display() {
     int segmentCounter = 1;
     for ( int i = 0; i < count; i++ )   {
         cout << "Line Segment " << segmentCounter << ":" << endl;
-//Just changed
         cout << "(" << Math::round(segments[i].getP1().getXValue()) << ", " << Math::round(segments[i].getP1().getYValue()) << "),(" <<
         Math::round(segments[i].getP2().getXValue()) << ", " << Math::round(segments[i].getP2().getYValue()) << ")" << endl;
 
@@ -358,81 +349,17 @@ LineSegment Intervals::getLine(int arrayIndex) {
 }
 
 
-
-
 int main() {
-
-
-//    int test = 25;
-//    int *test2 = &test;
-//    int test3 = *test2;
-//    double number = 1e-6;
-//    cout << test2 << ": " << number << endl;
-//    Point pointOne (0, 0);
-//    Point pointTwo(5.23, 5.23);
-//    LineSegment line (pointOne, pointTwo);
-//    Point a (0,5.23);
-//    Point b (5.23,0);
-//    LineSegment lines (a, b);
-//    double answer = lines.length();
-//    cout << "Testing the length function:" << endl;
-//    cout << answer << endl;
-//
-//    double square = Math::squareroot(6745);
-//    cout << "Testing the squareroot function:" << endl;
-//    cout << square << endl;
-//
-//    cout << "Testing the midpoint:" << endl;
-//    lines.midpoint().display();
-//
-//    cout << "Testing the slope:" << endl;
-//    cout << lines.slope() << endl;
-//
-//    cout << "Testing the xIntercept:" << endl;
-//    cout << lines.xIntercept() << endl;
-//
-//    cout << "Testing the yIntercept:" << endl;
-//    cout << lines.yIntercept() << endl;
-//
-//    cout << "Testing Display Equation:" << endl;
-//    lines.displayEquation();
-//
-//    cout << "Testing parallel boolean:" << endl;
-//    if (!lines.itIntersects(line))   {
-//        cout << "The lines are parallel" << endl;
-//        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
-//    }
-//    else   {
-//        cout << "The lines are not parallel" << endl;
-//        cout << "Lines slope: " << lines.slope() << " Line slope: " << line.slope() << endl;
-//        cout << "Testing intersection point:" << endl;
-//        lines.intersectionPoint(line).display();
-//    }
-//    cout << "Testing Intervals and Interval display:" << endl;
-//    Intervals testing (3);
-//
-//    Point point1 (0, 0);
-//    Point point2(5.23, 5.23);
-//    LineSegment line1 (point1, point2);
-//    Point point3 (0, 5.23);
-//    Point point4(5.23, 0);
-//    LineSegment line2 (point3, point4);
-//    Point point5 (0, 6.52);
-//    Point point6(6.52, 0);
-//    LineSegment line3 (point5, point6);
-//
-//    testing.addLineSegment(line1);
-//    testing.addLineSegment(line2);
-//    testing.addLineSegment(line3);
-//    testing.display();
-
     double linePoint1;
     double linePoint2;
     double linePoint3;
     double linePoint4;
     int numberOfLines;
+
     cin >> numberOfLines;
+
     Intervals interval (numberOfLines);
+
     for ( int i = 0; i < numberOfLines; i++ )   {
         cin >> linePoint1 >> linePoint2 >> linePoint3 >> linePoint4;
         Point pointOne (linePoint1, linePoint2);
@@ -440,14 +367,14 @@ int main() {
         LineSegment line (pointOne, pointTwo);
         interval.addLineSegment(line);
     }
+
     interval.display();
 
-//FINISH OUTPUTTING  PARALLEL CODE AND INTERSECTIONS
     bool doesIntersect = false;
     int jCounter = 1;
+
     for ( int i = 0; i < numberOfLines; i++ )   {
         for ( int j = jCounter; j < numberOfLines; j++ )   {
-//            cout << "Value of i: " << i << " Value of j: " << j << endl;
             if (!(i == j))   {
                 doesIntersect = interval.getLine(i).itIntersects(interval.getLine(j));
                 if (doesIntersect)   {
