@@ -38,12 +38,10 @@ protected:
 public:
     Point (); //default constructor; x = 0.0 and y = 0.0
     Point (double xvalue, double yvalue); //no-default constructor
-    void setLocation (double xvalue, double yvalue); // set x = xvalue and
-    // y = yvalue
+    void setLocation (double xvalue, double yvalue); // set x = xvalue and y = yvalue
     double getXValue(); //return x
     double getYValue(); //return y
     void display(); // Print (0.0, 0.0)
-    //other methods that are necessary
 };
 
 
@@ -71,7 +69,7 @@ double Point::getYValue() {
 }
 
 void Point::display() {
-    cout<< "(" << x << ", " << y << ")" << endl;
+    cout<< "(" << x << ", " << y << ")" << endl; // Formatted in this manner (x, y)
 }
 
 
@@ -123,7 +121,7 @@ double Math::squareroot(double number) {
 }
 
 double Math::round(double var) {
-    double value = (int)(var * 100.0); // Changed
+    double value = (int)(var * 100.0);
     double result = (double)value / 100.0;
     return result;
 }
@@ -165,10 +163,10 @@ class LineSegment {
 protected:
     Point P1;
     Point P2;
-    double x1;
-    double x2;
-    double y1;
-    double y2;
+    double x1; // x in P1
+    double x2; // x in P2
+    double y1; // y in P1
+    double y2; // y in P2
 public:
     LineSegment (); //default constructor
     LineSegment (Point one, Point two);
@@ -177,16 +175,12 @@ public:
     double xIntercept (); //return the x-intercept of the line segment
     double yIntercept (); //return the y-intercept of the line segment
     double slope (); //return the slope of the line segment
-    bool itIntersects (LineSegment L); //returns true if L intersects
-//    //with this line segment
-    Point intersectionPoint (LineSegment L);
+    bool itIntersects (LineSegment L); //returns true if L intersects with the line segment
+    Point intersectionPoint (LineSegment L); // returns the point in which two line segments intersect
     bool isParallel (LineSegment L); //check if slopes are same
-    void displayEquation (); // you will print in the format
+    void displayEquation (); // Prints in the format y=mx+b
     Point getP1 ();
     Point getP2 ();
-//    // y = m * x + c where m is the slope
-//    // and c is the y-intercept
-//    //other methods that are necessary
 };
 
 
@@ -236,12 +230,13 @@ double LineSegment::slope() {
 
 void LineSegment::displayEquation() {
     cout << "y=" << Math::round(slope()) << "*x+" << Math::round(yIntercept()) << endl;
+    //Formatted in this manner y=mx+b
 }
 
 bool LineSegment::isParallel(LineSegment L) {
     double slopeOne = Math::round(slope());
     double slopeTwo = Math::round(L.slope());
-    if ( slopeOne == slopeTwo )   {
+    if ( slopeOne == slopeTwo )   { // If the slopes of the two lines are the same the they are parallel
         return true;
     }
     else   {
@@ -250,10 +245,9 @@ bool LineSegment::isParallel(LineSegment L) {
 }
 
 Point LineSegment::intersectionPoint(LineSegment L) {
-    double beforeX = (L.yIntercept() - yIntercept())/(slope() - L.slope());
-    double x = Math::round(beforeX);
+    double x = Math::round((L.yIntercept() - yIntercept())/(slope() - L.slope()));
     double y = Math::round(((yIntercept()*L.slope())-(L.yIntercept()*slope()))/(L.slope() - slope()));
-    Point intersection ( x, y );
+    Point intersection ( x, y ); //Puts the x and y values in to a point to be returned
     return intersection;
 }
 
@@ -265,30 +259,30 @@ bool LineSegment::itIntersects(LineSegment L) {
     double d1u2 = L.getP1().getXValue() - getP1().getXValue();
     double d1v2 = L.getP1().getYValue() - getP1().getYValue();
 
-    double d1 = (d1u1 * d1v2) - (d1u2 * d1v1);
+    double d1 = (d1u1 * d1v2) - (d1u2 * d1v1); // d1 = P1->P2 x P1->Q1
 
     double d2u1 = getP2().getXValue() - getP1().getXValue();
     double d2v1 = getP2().getYValue() - getP1().getYValue();
     double d2u2 = L.getP2().getXValue() - getP1().getXValue();
     double d2v2 = L.getP2().getYValue() - getP1().getYValue();
 
-    double d2 = (d2u1 * d2v2) - (d2u2 * d2v1);
+    double d2 = (d2u1 * d2v2) - (d2u2 * d2v1); //d2 = P1->P2 x P1->Q2
 
     double d3u1 = L.getP2().getXValue() - L.getP1().getXValue();
     double d3v1 = L.getP2().getYValue() - L.getP1().getYValue();
     double d3u2 = getP1().getXValue() - L.getP1().getXValue();
     double d3v2 = getP1().getYValue() - L.getP1().getYValue();
 
-    double d3 = (d3u1 * d3v2) - (d3u2 * d3v1);
+    double d3 = (d3u1 * d3v2) - (d3u2 * d3v1); //d3 = Q1->Q2 x Q1->P1
 
     double d4u1 = L.getP2().getXValue() - L.getP1().getXValue();
     double d4v1 = L.getP2().getYValue() - L.getP1().getYValue();
     double d4u2 = getP2().getXValue() - getP1().getXValue();
     double d4v2 = getP2().getYValue() - getP1().getYValue();
 
-    double d4 = (d4u1 * d4v2) - (d4u2 * d4v1);
+    double d4 = (d4u1 * d4v2) - (d4u2 * d4v1); //d4 = Q1->Q2 x P1->P2
 
-    if ( ((d1 * d2 ) <= 0 ) && ((d3 * d4) <= 0))   {
+    if ( ((d1 * d2 ) <= 0 ) && ((d3 * d4) <= 0))   { //Intersects if d1d2 <= 0, d3d4 <= 0
         doesIntersect = true;
     }
     else   {
@@ -345,34 +339,35 @@ Intervals::Intervals () {
 }
 
 Intervals::Intervals (int size) {
-    segments = new LineSegment [size];
+    segments = new LineSegment [size]; //Assigns an array to the pointer segments.
     count = 0;
     maxSize = size;
 }
 
 void Intervals::addLineSegment(LineSegment L) {
-    segments[count] = L;
-    count = count + 1;
+    segments[count] = L; //Adds a new line segment in the array at index count.
+    count = count + 1; //Increases count by 1.
 }
 
 void Intervals::display() {
-    int segmentCounter = 1;
+    int segmentCounter = 1; // Keeps count of what line segment is being displayed
     for ( int i = 0; i < count; i++ )   {
-        cout << "Line Segment " << segmentCounter << ":" << endl;
+        cout << "Line Segment " << segmentCounter << ":" << endl; // Line Segment #:
         cout << "(" << Math::round(segments[i].getP1().getXValue()) << ", " << Math::round(segments[i].getP1().getYValue()) << "),(" <<
         Math::round(segments[i].getP2().getXValue()) << ", " << Math::round(segments[i].getP2().getYValue()) << ")" << endl;
+        // (x, y),(x, y)
 
-        cout << "Slope:" << Math::round(segments[i].slope()) << endl;
+        cout << "Slope:" << Math::round(segments[i].slope()) << endl; // Slope:m
 
         cout << "Midpoint:";
-        segments[i].midpoint().display();
+        segments[i].midpoint().display(); //Midpoint:(x, y)
 
-        cout << "X Intercept:" << Math::round(segments[i].xIntercept()) << endl;
-        cout << "Y Intercept:" << Math::round(segments[i].yIntercept()) << endl;
+        cout << "X Intercept:" << Math::round(segments[i].xIntercept()) << endl; // X Intercept:x
+        cout << "Y Intercept:" << Math::round(segments[i].yIntercept()) << endl; // Y Intercept:y
 
-        cout << "Length:" << Math::round(segments[i].length()) << endl;
+        cout << "Length:" << Math::round(segments[i].length()) << endl; // Length:#
 
-        segments[i].displayEquation();
+        segments[i].displayEquation(); // y=mx+b
         segmentCounter = segmentCounter + 1;
     }
 }
@@ -389,31 +384,32 @@ LineSegment Intervals::getLine(int arrayIndex) {
  * @return
  */
 int main() {
-    double linePoint1;
-    double linePoint2;
-    double linePoint3;
-    double linePoint4;
-    int numberOfLines;
+    double linePoint1; // x value of a point
+    double linePoint2; // y value of a point
+    double linePoint3; // x value of a point
+    double linePoint4; // y value of a point
+    int numberOfLines; // Number of line segments to be input
 
-    cin >> numberOfLines;
+    cin >> numberOfLines; // Inputs the number of line segments to be input
 
-    Intervals interval (numberOfLines);
+    Intervals interval (numberOfLines); // Constructor for Intervals
 
     for ( int i = 0; i < numberOfLines; i++ )   {
-        cin >> linePoint1 >> linePoint2 >> linePoint3 >> linePoint4;
+        cin >> linePoint1 >> linePoint2 >> linePoint3 >> linePoint4; // Inputs the x and y values of a line segment
         Point pointOne (linePoint1, linePoint2);
         Point pointTwo (linePoint3, linePoint4);
         LineSegment line (pointOne, pointTwo);
-        interval.addLineSegment(line);
+        interval.addLineSegment(line); // Adds the new line segment to the Interval class's array
     }
 
-    interval.display();
+    interval.display(); // Displays the information about the line segments
 
     bool doesIntersect = false;
-    int jCounter = 1;
+    int jCounter = 1; /* Keeps track of j so that every time j's for loop is called
+ * it starts 1 higher than the previous time */
 
     for ( int i = 0; i < numberOfLines; i++ )   {
-        for ( int j = jCounter; j < numberOfLines; j++ )   {
+        for ( int j = jCounter; j < numberOfLines; j++ )   { // j's for loop compares line segments to i's line segment
             if (!(i == j))   {
                 doesIntersect = interval.getLine(i).itIntersects(interval.getLine(j));
                 if (doesIntersect)   {
